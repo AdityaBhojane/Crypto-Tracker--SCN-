@@ -1,92 +1,23 @@
-
-import { CircleUser, Menu, Package2, Search } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-
-export const description =
-  "A settings page. The settings page has a sidebar navigation and a main content area. The main content area has a form to update the store name and a form to update the plugins directory. The sidebar navigation has h2s to general, security, integrations, support, organizations, and advanced settings."
+import { Menu, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { useProductStore } from "@/zustandStore/store";
+import { ModeToggle } from "../ModeToggle/ModeToogle";
 
 export function NavigationBar() {
+  const setCurrency = useProductStore((state) => state.setCurrency);
+
   return (
     <div className="flex w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <h2
-            className="flex items-center gap-2 text-lg font-semibold md:text-base"
-          >
-            <Package2 className="h-6 w-6" />
-          </h2>
-          <h2
-            className="text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
-          >
-            INR
-          </h2>
-          <h2
-            className="text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
-          >
-            USD
+        {/* Other Navigation Content */}
+        <nav className="flex-col w-[50%] gap-6 text-xl font-bold md:flex md:flex-row md:items-center md:gap-5 md:text-md lg:gap-6">
+          <h2 className="text-muted-foreground transition-colors hover:text-foreground cursor-pointer">
+            Crypto Tracker <span className="text-sm">SCN</span>
           </h2>
         </nav>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left">
-            <nav className="grid gap-6 text-lg font-medium">
-              <h2
 
-                className="flex items-center gap-2 text-lg font-semibold"
-              >
-                <Package2 className="h-6 w-6" />
-                <span className="sr-only">Acme Inc</span>
-              </h2>
-              <h2
-
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Dashboard
-              </h2>
-              <h2
-
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Orders
-              </h2>
-              <h2
-
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Products
-              </h2>
-              <h2
-
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Customers
-              </h2>
-              <h2 className="hover:text-foreground">
-                Settings
-              </h2>
-            </nav>
-          </SheetContent>
-        </Sheet>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
           <form className="ml-auto flex-1 sm:flex-initial">
             <div className="relative">
@@ -98,25 +29,27 @@ export function NavigationBar() {
               />
             </div>
           </form>
+
+          {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
+            <Button variant="outline" size="icon" className="shrink-0">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Change Currency</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>setCurrency('INR')}>INR</DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>setCurrency('USD')}>USD</DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>setCurrency('EUR')}>EURO</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <ModeToggle/>
         </div>
       </header>
-
     </div>
-  )
+  );
 }

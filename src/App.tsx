@@ -1,7 +1,5 @@
-
-// import { useQuery } from "@tanstack/react-query"
-import { CoinList } from "./components/CoinList/CoinList"
-import { NavigationBar } from "./components/NavigationBar/NavigationBar"
+import { ThemeProvider } from "@/components/Theme-provider/Theme-provider"
+import Routing from "./Route/Routing"
 // import { GetCoinData } from "./utils/GetCoinData"
 
 function App() {
@@ -10,13 +8,14 @@ function App() {
   //   queryKey:['Coins'],
   //   queryFn:GetCoinData
   // });
-
   // console.log(data)
+
 
   return (
     <>
-      <NavigationBar/>
-      <CoinList />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Routing />
+      </ThemeProvider>
     </>
   )
 }

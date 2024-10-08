@@ -1,5 +1,3 @@
-
-
 import {
   Card,
   CardContent,
@@ -22,26 +20,32 @@ import {
 import CoinRow from "../CoinRow/CoinRow"
 import { GetCoinData } from "@/utils/GetCoinData"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
+import { useProductStore } from "@/zustandStore/store"
 
 interface CoinData {
-    name: string;
-    image: string;
-    current_price: number;
-    low_24h: number;
-    high_24h: number;
-  }
+  name: string;
+  image: string;
+  current_price: number;
+  low_24h: number;
+  high_24h: number;
+}
 
-  
+
 export const description =
   "An products dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. It displays a list of products in a table with actions."
 
 export function CoinList() {
 
-    const {data} = useQuery({
-    queryKey:['Coins'],
-    queryFn:GetCoinData,
-    placeholderData: keepPreviousData  
+  // Access category and setCategory from Zustand store
+  const currency = useProductStore((state) => state.currency);
+  
+  const { data } = useQuery({
+    queryKey: ['Coins',currency],
+    queryFn:()=> GetCoinData(currency),
+    placeholderData: keepPreviousData
   });
+
+
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -72,7 +76,7 @@ export function CoinList() {
                           highest
                         </TableHead>
                         <TableHead className="hidden md:table-cell">
-                          Explore 
+                          Explore
                         </TableHead>
                         <TableHead>
                           <span className="sr-only">Actions</span>
@@ -80,17 +84,17 @@ export function CoinList() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {/* coin data goes here */}
-                        {data?.map((items:CoinData, index:number)=>{
-                            return <CoinRow 
-                            key={index}
-                            name={items.name} 
-                            image={items.image} 
-                            price={items.current_price}
-                            lowPrice={items.low_24h}
-                            highPrice={items.high_24h}
-                            />
-                        })}
+                      {/* coin data goes here */}
+                      {data?.map((items: CoinData, index: number) => {
+                        return <CoinRow
+                          key={index}
+                          name={items.name}
+                          image={items.image}
+                          price={items.current_price}
+                          lowPrice={items.low_24h}
+                          highPrice={items.high_24h}
+                        />
+                      })}
                     </TableBody>
                   </Table>
                 </CardContent>

@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 
 import { TableCell, TableRow } from "../ui/table"
+import { useProductStore } from "@/zustandStore/store";
 
 interface CoinDataProps {
     name: string;
@@ -14,7 +15,8 @@ interface CoinDataProps {
 
 function CoinRow({image, name, price, lowPrice, highPrice}:CoinDataProps) {
 
-    console.log(name)
+    const currency = useProductStore((state) => state.currency);
+
     return (
         <>
             <TableRow>
@@ -32,13 +34,13 @@ function CoinRow({image, name, price, lowPrice, highPrice}:CoinDataProps) {
                 </TableCell>
 
                 <TableCell className="hidden md:table-cell">
-                    ${price}
+                    {currency == "USD"? "$":currency== "INR"?  "₹": "€"} {price}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                    {lowPrice}
+                {currency == "USD"? "$":currency== "INR"?  "₹": "€"} {lowPrice}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                    {highPrice}
+                {currency == "USD"? "$":currency== "INR"?  "₹": "€"} {highPrice}
                 </TableCell>
                 <TableCell >
                     <Badge variant="outline" className="px-5 py-2 cursor-pointer">Show Details</Badge>

@@ -93,7 +93,7 @@ export function CoinList() {
                     </TableHeader>
                     <TableBody>
                       {/* coin data goes here */}
-                      {data?.map((items: CoinData, index: number) => {
+                      {data.map((items: CoinData, index: number) => {
                         return <CoinRow
                           key={index}
                           name={items.name}

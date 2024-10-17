@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 
 import { TableCell, TableRow } from "../ui/table"
 import { useProductStore } from "@/zustandStore/store";
+import { useNavigate } from "react-router-dom";
 
 interface CoinDataProps {
     name: string;
@@ -11,12 +12,13 @@ interface CoinDataProps {
     price: number;
     lowPrice: number;
     highPrice: number;
+    id:string
   }
 
-function CoinRow({image, name, price, lowPrice, highPrice}:CoinDataProps) {
+function CoinRow({image, name, price, lowPrice, highPrice,id}:CoinDataProps) {
 
     const currency = useProductStore((state) => state.currency);
-
+    const navigate = useNavigate();
     return (
         <>
             <TableRow>
@@ -43,7 +45,11 @@ function CoinRow({image, name, price, lowPrice, highPrice}:CoinDataProps) {
                 {currency == "USD"? "$":currency== "INR"?  "₹": "€"} {highPrice}
                 </TableCell>
                 <TableCell >
-                    <Badge variant="outline" className="px-5 py-2 cursor-pointer">Show Details</Badge>
+                    <Badge variant="outline" className="px-5 py-2 cursor-pointer"
+                    onClick={()=>{
+                        navigate(`/details/${id}`)
+                    }}
+                    >Show Details</Badge>
                 </TableCell>
             </TableRow>
 

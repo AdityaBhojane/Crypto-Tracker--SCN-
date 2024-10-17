@@ -15,3 +15,14 @@ export const useProductStore = create<ProductStoreState>((set) => ({
   // setCategory function allows the category to be updated
   setCurrency: (currency: string) => set({ currency }),
 }));
+
+
+interface PaginationStoreState {
+  page:number;
+  setPage: (page:number) => void;
+}
+
+export const usePaginationStore = create<PaginationStoreState>((set)=>({
+  page:1,
+  setPage: (page:number)=> set({page})
+}))
